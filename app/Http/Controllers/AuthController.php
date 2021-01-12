@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Rules\ValidMail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -104,40 +106,32 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-
+$request->birthdate = date('YYYY-MM-DD', '2021202120212021');
+        return $request->birthdate;
         //specify your custom message here
         $messages = [
             'required' => ['error' => 'blank'],
             'numeric' => ['error' => "not_a_number"],
-            'string' => 'The :attribute must be text format',
-            'file' => 'The :attribute must be a file',
-            'mimes' => 'Supported file format for :attribute are :mimes',
-            'max' => 'The :attribute must have a maximum length of :max',
-            'country_code.in' =>  ['error' =>'inclusion'],
-            'regex' => 'inclusion',
+            'phone_number.regex' => ['error' => "invalid"],
+            'in' => ['error' => 'inclusion'],
+            'phone_number.min' => ['string' => ['error' => "too_short", 'count' => ':min']],
+            'phone_number.max' => ['string' => ['error' => "too_long", 'count' => ':max']],
+            'birthdate.date_format' => ['error' => "invalid"],
+            'birthdate.before' => ['error' => "in_the_future"],
+            'avatar.mimes' => ['error' => "invalid_content_type"],
+            'unique' => ['error' => "taken"],
         ];
-        $request->merge([
-            'country_code' => 'EG',
-            'phone_number' => 'EG',
-        ]);
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:75',
             'last_name' => 'required|string|max:75',
-            'country_code' => ['required', Rule::in(['EG'])],
-            'phone_number' => 'required|numeric|regex:/(01)[0-9]{9}/',
-            'gender' => 'required|string|max:75',
-            'birthdate' => 'required|string|max:75',
+            'country_code' => [Rule::in(['EG'])],
+            'phone_number' => 'required|unique:users,phone_number|min:10|max:15|regex:/(01)[0-9]{9}/',
+            'gender' => [Rule::in(['male', 'female'])],
+            'birthdate' => 'required|string|max:75|date_format:YYYY-MM-DD|before:today',
             'avatar' => 'required|file|mimes:jpeg,png,jpg,gif',
-            'email' => 'required|string',
+            'email' => ['required','unique:users,email', new ValidMail],
             'password' => 'required|string|confirmed|min:6',
         ], $messages);
-
-
-//        $validator = Validator::make($request->all(), [
-//            'name' => 'required|string|between:2,100',
-//            'email' => 'required|string|email|max:100|unique:users',
-//            'password' => 'required|string|confirmed|min:6',
-//        ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->toJson()], 400);
