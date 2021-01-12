@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Response;
 class StateController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.auth', ['only' => ['getState']]);
+    }
     public function getState(Request $request)
     {
         $user = Auth::user();
