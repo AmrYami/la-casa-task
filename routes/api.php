@@ -28,3 +28,4 @@ Route::group([
     Route::post('register', 'AuthController@register');
 
 });
+Route::post('states', [\App\Http\Controllers\StateController::class, 'getState']);

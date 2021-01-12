@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "77fa26cb-09de-4d69-8c42-fe8fc9a2d7c4",
+		"name": "end-points-task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost/la-casa-task/public/api/auth/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost/la-casa-task/public/api/auth/register?first_name=horan&last_name=horan&country_code=EG&phone_number=01011426244&gender=male&email=yami1@gmail.com&password=123456789&password_confirmation=123456789&birthdate=04-13-2019&avatar=asdasd",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"la-casa-task",
+						"public",
+						"api",
+						"auth",
+						"register"
+					],
+					"query": [
+						{
+							"key": "first_name",
+							"value": "horan"
+						},
+						{
+							"key": "last_name",
+							"value": "horan"
+						},
+						{
+							"key": "country_code",
+							"value": "EG"
+						},
+						{
+							"key": "phone_number",
+							"value": "01011426244"
+						},
+						{
+							"key": "gender",
+							"value": "male"
+						},
+						{
+							"key": "email",
+							"value": "yami1@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "123456789"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "123456789"
+						},
+						{
+							"key": "birthdate",
+							"value": "04-13-2019"
+						},
+						{
+							"key": "avatar",
+							"value": "asdasd"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/la-casa-task/public/api/auth/login?email=amr@gmail.com&password=123456789",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost/la-casa-task/public/api/auth/login?email=amr@gmail.com&password=123456789",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"la-casa-task",
+						"public",
+						"api",
+						"auth",
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "amr@gmail.com"
+						},
+						{
+							"key": "password",
+							"value": "123456789"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost/la-casa-task/public/api/states?phone_number=01011426241&status=1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3RcL2xhLWNhc2EtdGFza1wvcHVibGljXC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjEwNDgxNzk4LCJleHAiOjE2MTA0ODUzOTgsIm5iZiI6MTYxMDQ4MTc5OCwianRpIjoiSnhtYjJWRmR3Nkp4bzJoMCIsInN1YiI6MSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Pd0_CGJEb4kn5PPzlC53BX2R7SfZ9uOCX19BQ-RL1hE",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "phone_number",
+							"value": "010114262412",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/la-casa-task/public/api/states?phone_number=01011426241&status=1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"la-casa-task",
+						"public",
+						"api",
+						"states"
+					],
+					"query": [
+						{
+							"key": "phone_number",
+							"value": "01011426241"
+						},
+						{
+							"key": "status",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

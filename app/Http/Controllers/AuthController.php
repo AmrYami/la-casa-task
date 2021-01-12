@@ -7,6 +7,7 @@ use App\Rules\ValidMail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Validation\Rule;
 use Validator;
 
@@ -99,17 +100,9 @@ class AuthController extends Controller
         return Auth::guard();
     }
 
-    /**
-     * Register a User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function register(Request $request)
+    public function getMessageErrors()
     {
-$request->birthdate = date('YYYY-MM-DD', '2021202120212021');
-        return $request->birthdate;
-        //specify your custom message here
-        $messages = [
+        return [
             'required' => ['error' => 'blank'],
             'numeric' => ['error' => "not_a_number"],
             'phone_number.regex' => ['error' => "invalid"],
@@ -121,7 +114,11 @@ $request->birthdate = date('YYYY-MM-DD', '2021202120212021');
             'avatar.mimes' => ['error' => "invalid_content_type"],
             'unique' => ['error' => "taken"],
         ];
-        $validator = Validator::make($request->all(), [
+    }
+
+    public function validateRequest($request, $messages)
+    {
+        return Validator::make($request->all(), [
             'first_name' => 'required|string|max:75',
             'last_name' => 'required|string|max:75',
             'country_code' => [Rule::in(['EG'])],
@@ -129,9 +126,22 @@ $request->birthdate = date('YYYY-MM-DD', '2021202120212021');
             'gender' => [Rule::in(['male', 'female'])],
             'birthdate' => 'required|string|max:75|date_format:YYYY-MM-DD|before:today',
             'avatar' => 'required|file|mimes:jpeg,png,jpg,gif',
-            'email' => ['required','unique:users,email', new ValidMail],
+            'email' => ['required', 'unique:users,email', new ValidMail],
             'password' => 'required|string|confirmed|min:6',
         ], $messages);
+    }
+
+    /**
+     * Register a User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        //specify your custom message here
+        $messages = $this->getMessageErrors();
+
+        $validator = $this->validateRequest($request, $messages);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->toJson()], 400);
