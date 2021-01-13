@@ -16,7 +16,7 @@ php artisan migrate --seed
 now you have 2 default users in database
 
 
-note there's file postman for all requests please import it in your postman and try all requests
+note there's file postman (end-points-task.postman_collection.json)  for all requests please import it in your postman and try all requests
 
 routes:
 localhost/la-casa-task/public/api/auth/register post request to check form in task 1
